@@ -1,15 +1,9 @@
 package app.entities;
+import javax.persistence.*;
 
-import java.io.Serializable;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement(name = "student")
-@XmlAccessorType(XmlAccessType.FIELD)
-public class Student implements Serializable {
-    private static final long serialVersionUID = 1L;
+@Entity
+@Table(name = "student")
+public class Student  {
     private int MSSV;
     private String name;
     private String sex;
@@ -18,14 +12,17 @@ public class Student implements Serializable {
     public Student() {
     }
 
-    public Student(int mssv, String name, String sex, String CMND, float gpa) {
+    public Student(int mssv, String name, String sex, String CMND) {
         super();
         this.MSSV = mssv;
         this.name = name;
         this.sex = sex;
         this.CMND = CMND;
     }
-
+    
+    @Id
+    @Column(name = "mssv")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getMSSV() {
         return MSSV;
     }
