@@ -14,7 +14,7 @@ public class MainMenuController {
 	private Constants constants;
 	
 	public MainMenuController(MainMenuView view) {
-        
+        constants = new Constants();
         this.mainMenuView = view;
 
 //        add listeners
@@ -31,11 +31,11 @@ public class MainMenuController {
 	 class AddListener implements ActionListener {
 	        public void actionPerformed(ActionEvent e) {
 	        	mainMenuView.setVisible(false);
-	        	 StudentView studentView = new StudentView(2);
+	        	StudentView studentView = new StudentView(2);
 	        	studentView.setVisible(true);
-	        	Student mockData = new Student(141, "abc", "code", "cmnd");
+	        	Student data = studentView.getStudentInfo();
 	        	Transaction trans = App.session.beginTransaction();
-	        	App.session.save(mockData);
+	        	App.session.save(data);
 	        	trans.commit();
 	        }
 	    }
