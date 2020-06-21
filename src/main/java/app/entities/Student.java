@@ -22,7 +22,6 @@ public class Student  {
     
     @Id
     @Column(name = "mssv")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getMSSV() {
         return MSSV;
     }

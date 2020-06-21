@@ -6,12 +6,11 @@ import app.entities.User;
 import constants.Constants;
 import app.utils.Common;
 import app.views.LoginView;
-import app.views.StudentView;
+import app.views.MainMenuView;
 
 public class LoginController {
-
+	private MainMenuView mainMenuView;
     private LoginView loginView;
-    private StudentView studentView;
     private Constants constants;
     private Common commonUtil;
 
@@ -27,9 +26,8 @@ public class LoginController {
         public void actionPerformed(ActionEvent e) {
             User user = loginView.getUser();
             if (commonUtil.checkUserLogin(user) == true) {
-                studentView = new StudentView();
-                StudentController studentController = new StudentController(studentView);
-                studentController.showStudentView();
+            	MainMenuController mainMenuController = new MainMenuController(new MainMenuView());
+            	mainMenuController.showMainMenuView();
                 loginView.setVisible(false);
             } else {
                 loginView.showMessage(constants.loginErrorMessage);

@@ -14,27 +14,28 @@ import app.views.LoginView;
 
 public class App {
 	protected SessionFactory sessionFactory;
+	public static Session session;
     public static void main(String[] args) {
     	App app = new App();
     	app.setup();
         EventQueue.invokeLater(new Runnable() {
             public void run() {
-                LoginView view = new LoginView();
-                LoginController controller = new LoginController(view);
-
+                LoginController controller = new LoginController(new LoginView());
                 controller.showLoginView();
             }
         });
     }
     
     public void setup() {
-    	
     	try {
     		sessionFactory = new Configuration().configure().buildSessionFactory();
     	    if (sessionFactory != null) {
-    	    	Session session = sessionFactory.openSession();
-    	    	Student a = (Student)session.get(Student.class, 14141);
-    	    	System.out.print(a);
+    	    	session = sessionFactory.openSession();
+    	    	// check to see if db connected
+//    	    	Student student = (Student)session.get(Student.class, 14141);
+//    	    	if (student!= null) {
+//    	    		
+//    	    	}
 //    	    	session.beginTransaction();
     	    	
     	    }

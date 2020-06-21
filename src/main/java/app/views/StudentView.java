@@ -20,9 +20,9 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import app.entities.Student;
+import constants.Constants;
 
 public class StudentView extends JFrame implements ActionListener, ListSelectionListener {
-    private static final long serialVersionUID = 1L;
     private JButton addStudentBtn;
     private JButton editStudentBtn;
     private JButton deleteStudentBtn;
@@ -30,7 +30,7 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
     private JButton sortStudentNameBtn;
     private JScrollPane jScrollPaneStudentTable;
     private JTable studentTable;
-    
+	private Constants constants;
     private JLabel mssvLabel;
     private JLabel nameLabel;
     private JLabel ageLabel;
@@ -41,10 +41,8 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
     private JTextField sexInput;
     private JTextField cmndInput;
     
-    // định nghĩa các cột của bảng student
-    private String [] columnNames = new String [] {
-            "MSSV", "Name", "Sex", "CMND"};
-    // định nghĩa dữ liệu mặc định của bẳng student là rỗng
+    private String [] columnNames = new String [] {"MSSV", "Name", "Sex", "CMND"};
+
     private Object data = new Object [][] {};
     
     public StudentView() {
@@ -58,31 +56,25 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
         deleteStudentBtn = new JButton("Delete");
         clearBtn = new JButton("Clear");
         sortStudentNameBtn = new JButton("Sort By Name");
-        // khởi tạo bảng student
         jScrollPaneStudentTable = new JScrollPane();
         studentTable = new JTable();
-        
-        // khởi tạo các label
         mssvLabel = new JLabel("MSSV");
         nameLabel = new JLabel("Name");
         ageLabel = new JLabel("Sex");
         cmndLabel = new JLabel("CMND");
-        
-        // khởi tạo các trường nhập dữ liệu cho student
         mssvInput = new JTextField(6);
         mssvInput.setEditable(false);
         nameInput = new JTextField(15);
         sexInput = new JTextField(6);
         cmndInput = new JTextField();
         
-        // cài đặt các cột và data cho bảng student
         studentTable.setModel(new DefaultTableModel((Object[][]) data, columnNames));
         jScrollPaneStudentTable.setViewportView(studentTable);
         jScrollPaneStudentTable.setPreferredSize(new Dimension (480, 300));
         
-         // tạo spring layout
+
         SpringLayout layout = new SpringLayout();
-        // tạo đối tượng panel để chứa các thành phần của màn hình quản lý Student
+        
         JPanel panel = new JPanel();
         panel.setSize(800, 420);
         panel.setLayout(layout);
@@ -143,7 +135,6 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
         this.setSize(800, 420);
         editStudentBtn.setEnabled(false);
         deleteStudentBtn.setEnabled(false);
-        // enable Add button
         addStudentBtn.setEnabled(true);
     }
     
@@ -153,10 +144,6 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
     
     public void showListStudents(List<Student> list) {
         int size = list.size();
-        // với bảng studentTable có 5 cột, 
-        // khởi tạo mảng 2 chiều students, trong đó:
-        // số hàng: là kích thước của list student 
-        // số cột: là 5
         Object [][] students = new Object[size][5];
         for (int i = 0; i < size; i++) {
             students[i][0] = list.get(i).getMSSV();
@@ -167,12 +154,7 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
         studentTable.setModel(new DefaultTableModel(students, columnNames));
     }
     
-    /**
-     * điền thông tin của hàng được chọn từ bảng student 
-     * vào các trường tương ứng của student.
-     */
     public void fillStudentFromSelectedRow() {
-        // lấy chỉ số của hàng được chọn 
         int row = studentTable.getSelectedRow();
         if (row >= 0) {
             mssvInput.setText(studentTable.getModel().getValueAt(row, 0).toString());
@@ -216,7 +198,7 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
         }
         try {
             Student student = new Student();
-            if (mssvInput.getText() != null && !"".equals(mssvInput.getText())) {
+            if (mssvInput.getText() != null && !(mssvInput.getText().contentEquals(""))) {
                 student.setMSSV(Integer.parseInt(mssvInput.getText()));
             }
             student.setName(nameInput.getText().trim());
@@ -231,19 +213,18 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
     
     private boolean validateName() {
         String name = nameInput.getText();
-        if (name == null || "".equals(name.trim())) {
+        if (name == null || (name.trim().equals(""))) {
             nameInput.requestFocus();
-            showMessage("Name không được trống.");
+            showMessage(constants.EmptyString);
             return false;
         }
         return true;
     }
     
     private boolean validateCMND() {
-        String cmnd = cmndInput.getText();
-        if (cmnd == null || "".equals(cmnd.trim())) {
+        if (cmndInput.getText() == null || (cmndInput.getText().trim().equals(""))) {
         	cmndInput.requestFocus();
-            showMessage("CMND không được trống.");
+            showMessage(constants.EmptyString);
             return false;
         }
         return true;
@@ -252,7 +233,7 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
     private boolean validateSex() {
         if (sexInput.getText() == null || sexInput.getText().trim().equals("")) {
         	sexInput.requestFocus();
-            showMessage("Sex không được trống.");
+            showMessage(constants.EmptyString);
             return false;
         }
         return true;

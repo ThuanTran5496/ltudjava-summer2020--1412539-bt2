@@ -22,11 +22,6 @@ public class StudentUtils {
         this.listStudents = readListStudents();
     }
 
-    /**
-     * Lưu các đối tượng student vào file student.xml
-     * 
-     * @param students
-     */
     public void writeListStudents(List<Student> students) {
         XmlBinding studentXML = new XmlBinding();
         studentXML.setStudent(students);
@@ -68,12 +63,6 @@ public class StudentUtils {
             }
         }
     }
-
-    /**
-     * xóa student từ listStudents và lưu listStudents vào file
-     * 
-     * @param student
-     */
     public boolean delete(Student student) {
         boolean isFound = false;
         int size = listStudents.size();
