@@ -1,7 +1,5 @@
 package app.controllers;
 import main.App;
-import java.util.List;
-
 import org.hibernate.Transaction;
 
 import app.entities.Student;
@@ -33,7 +31,7 @@ public class MainMenuController {
 	 class AddListener implements ActionListener {
 	        public void actionPerformed(ActionEvent e) {
 	        	mainMenuView.setVisible(false);
-	        	 StudentView studentView = new StudentView();
+	        	 StudentView studentView = new StudentView(2);
 	        	studentView.setVisible(true);
 	        	Student mockData = new Student(141, "abc", "code", "cmnd");
 	        	Transaction trans = App.session.beginTransaction();
@@ -44,7 +42,7 @@ public class MainMenuController {
 	 class EditListener implements ActionListener {
 	        public void actionPerformed(ActionEvent e) {
 	        	mainMenuView.setVisible(false);
-	        	 StudentView studentView = new StudentView();
+	        	 StudentView studentView = new StudentView(2);
 	        	studentView.setVisible(true);
 	        	// a = search function return student object
 	        	Student mockData = new Student(141, "abc", "code", "cmnd");
@@ -56,7 +54,7 @@ public class MainMenuController {
 	 class DeleteListener implements ActionListener {
 	        public void actionPerformed(ActionEvent e) {
 	        	mainMenuView.setVisible(false);
-	        	 StudentView studentView = new StudentView();
+	        	 StudentView studentView = new StudentView(3);
 	        	studentView.setVisible(true);
 	        	Student mockData = new Student(141, "abc", "code", "cmnd");
 	        	Transaction trans = App.session.beginTransaction();
@@ -67,7 +65,7 @@ public class MainMenuController {
 	 class ViewListener implements ActionListener {
 	        public void actionPerformed(ActionEvent e) {
 	        	mainMenuView.setVisible(false);
-	        	 StudentView studentView = new StudentView();
+	        	 StudentView studentView = new StudentView(1);
 	        	studentView.setVisible(true);
 	        }
 	    }
