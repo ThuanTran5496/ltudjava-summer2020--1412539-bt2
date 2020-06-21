@@ -4,7 +4,7 @@ import app.entities.User;
 
 public class Common {
     public boolean checkUserLogin(User user) {
-        if (user != null && user.getUserName().equals("admin") && user.getPassword().equals("admin")) {
+        if (user != null && user.getUserName().equals("user") && user.getPassword().equals("password")) {
                 return true;
         }
         return false;

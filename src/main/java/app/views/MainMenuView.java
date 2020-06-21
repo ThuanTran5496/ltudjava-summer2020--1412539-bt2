@@ -61,21 +61,21 @@ public class MainMenuView extends JFrame implements ActionListener, ListSelectio
         this.setSize(400, 350);
         this.setResizable(false);
     }
-
 	  public void actionPerformed(ActionEvent e) {
-	    
 	  }
 	    
 	  public void valueChanged(ListSelectionEvent e) {
-	    
 	  }
-	    public void addAddNewListener(ActionListener listener) {
-	    	addBtn.addActionListener(listener);
-	    }
-	    public void addEditListener(ActionListener listener) {
-	    	editBtn.addActionListener(listener);
-	    }
-	    public void addDeleteListener(ActionListener listener) {
-	    	deleteBtn.addActionListener(listener);
-	    }
+	  public void addAddNewListener(ActionListener listener) {
+	    addBtn.addActionListener(listener);
+	  }
+	   public void addEditListener(ActionListener listener) {
+	    editBtn.addActionListener(listener);
+	  }
+	  public void addDeleteListener(ActionListener listener) {
+	    deleteBtn.addActionListener(listener);
+	  }
+	  public void addViewListener(ActionListener listener) {
+	    viewBtn.addActionListener(listener);
+	  }
 }

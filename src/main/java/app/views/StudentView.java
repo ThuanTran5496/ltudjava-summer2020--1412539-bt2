@@ -64,13 +64,13 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
         if (type == 1) {
         	this.setTitle("View all student");
         	panel.add(jScrollPaneStudentTable);
-        	layout.putConstraint(SpringLayout.WEST, jScrollPaneStudentTable, 300, SpringLayout.WEST, panel);
+        	layout.putConstraint(SpringLayout.WEST, jScrollPaneStudentTable, 30, SpringLayout.WEST, panel);
             layout.putConstraint(SpringLayout.NORTH, jScrollPaneStudentTable, 10, SpringLayout.NORTH, panel);
         }
         
-        // add or edit
+        // add
         else if (type == 2) {
-        	this.setTitle("Add or update student");
+        	this.setTitle("Add a student");
         	panel.add(mssvLabel);
             panel.add(nameLabel);
             panel.add(ageLabel);
@@ -98,8 +98,16 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
             layout.putConstraint(SpringLayout.NORTH, sexInput, 70, SpringLayout.NORTH, panel);
             layout.putConstraint(SpringLayout.WEST, cmndInput, 100, SpringLayout.WEST, panel);
             layout.putConstraint(SpringLayout.NORTH, cmndInput, 100, SpringLayout.NORTH, panel);
-        } else if (type == 3 ){
+        } else if (type == 3 ) {
         	this.setTitle("Delete a student");
+        	panel.add(mssvLabel);
+        	panel.add(mssvInput);
+        	layout.putConstraint(SpringLayout.WEST, mssvLabel, 10, SpringLayout.WEST, panel);
+            layout.putConstraint(SpringLayout.NORTH, mssvLabel, 10, SpringLayout.NORTH, panel);
+            layout.putConstraint(SpringLayout.WEST, mssvInput, 100, SpringLayout.WEST, panel);
+            layout.putConstraint(SpringLayout.NORTH, mssvInput, 10, SpringLayout.NORTH, panel);
+        } else {
+        	this.setTitle("Edit a student");
         	panel.add(mssvLabel);
         	panel.add(mssvInput);
         	layout.putConstraint(SpringLayout.WEST, mssvLabel, 10, SpringLayout.WEST, panel);
@@ -134,6 +142,14 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
         cmndInput.setText(student.getCMND());
     }
     
+    public int getMSSVFromInput() {
+    	if (validateMSSV() == true) {
+    		return Integer.parseInt(mssvInput.getText());
+    	} else {
+    		 return -1;
+    	}
+    }
+    
     public Student getStudentInfo() {
         if (!validateName() || !validateSex() || !validateCMND()) {
             return null;
@@ -148,6 +164,24 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
             showMessage(e.getMessage());
         }
         return null;
+    }
+    
+    private boolean validateMSSV() {
+        if (mssvInput.getText() == null || (mssvInput.getText().trim().equals(""))) {
+        	mssvInput.requestFocus();
+            showMessage(constants.EmptyString);
+            return false;
+        } else {
+        	try {
+       	     	int result = Integer.parseInt(mssvInput.getText());
+        	}
+        	catch (NumberFormatException e) {
+        		showMessage(constants.NaN);
+       	     	System.out.print("input mssv not a number");
+        	}
+           
+        }
+        return true;
     }
     
     private boolean validateName() {

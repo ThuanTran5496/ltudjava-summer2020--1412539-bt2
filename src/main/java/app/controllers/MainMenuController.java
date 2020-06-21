@@ -21,7 +21,7 @@ public class MainMenuController {
         view.addAddNewListener(new AddListener());
         view.addEditListener(new EditListener());
         view.addDeleteListener(new DeleteListener());
-//        view.addViewListener(new ClearListener());
+        view.addViewListener(new ViewListener());
     }
 	
 	public void showMainMenuView() {
@@ -42,30 +42,29 @@ public class MainMenuController {
 	 class EditListener implements ActionListener {
 	        public void actionPerformed(ActionEvent e) {
 	        	mainMenuView.setVisible(false);
-	        	 StudentView studentView = new StudentView(2);
+	        	 StudentView studentView = new StudentView(4);
 	        	studentView.setVisible(true);
-	        	// a = search function return student object
-	        	Student mockData = new Student(141, "abc", "code", "cmnd");
+	        	Student data = studentView.getStudentInfo();
 	        	Transaction trans = App.session.beginTransaction();
-	        	App.session.update(mockData);
+	        	App.session.update(data);
 	        	trans.commit();
 	        }
 	    }
 	 class DeleteListener implements ActionListener {
 	        public void actionPerformed(ActionEvent e) {
 	        	mainMenuView.setVisible(false);
-	        	 StudentView studentView = new StudentView(3);
+	        	StudentView studentView = new StudentView(3);
 	        	studentView.setVisible(true);
-	        	Student mockData = new Student(141, "abc", "code", "cmnd");
+	        	Student data = studentView.getStudentInfo();
 	        	Transaction trans = App.session.beginTransaction();
-	        	App.session.delete(mockData);
+	        	App.session.delete(data);
 	        	trans.commit();
 	        }
 	    }
 	 class ViewListener implements ActionListener {
 	        public void actionPerformed(ActionEvent e) {
 	        	mainMenuView.setVisible(false);
-	        	 StudentView studentView = new StudentView(1);
+	        	StudentView studentView = new StudentView(1);
 	        	studentView.setVisible(true);
 	        }
 	    }

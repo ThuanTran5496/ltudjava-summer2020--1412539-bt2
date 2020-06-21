@@ -9,4 +9,5 @@ public final class Constants {
 	public final String editFail = "edit student fail!";
 	public final String deleteFail = "delete student fail!";
 	public final String EmptyString = "field can not be empty!";
+	public final String NaN = "Not a number!";
 }
