@@ -1,7 +1,9 @@
 package app.controllers;
-import main.App;
-import org.hibernate.Transaction;
 
+import app.hibernate.HibernateUtil;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import app.entities.Student;
 import app.views.MainMenuView;
 import app.views.StudentView;
@@ -16,8 +18,9 @@ public class MainMenuController {
 	public MainMenuController(MainMenuView view) {
         constants = new Constants();
         this.mainMenuView = view;
-
+        
 //        add listeners
+        view.importNewClassListener(new ImportListener());
         view.addAddNewListener(new AddListener());
         view.addEditListener(new EditListener());
         view.addDeleteListener(new DeleteListener());
@@ -28,44 +31,104 @@ public class MainMenuController {
         mainMenuView.setVisible(true);
     }
 	
-	 class AddListener implements ActionListener {
-	        public void actionPerformed(ActionEvent e) {
-	        	mainMenuView.setVisible(false);
+	class ImportListener implements ActionListener {
+		public void actionPerformed(ActionEvent evt) {
+        	Transaction transaction = null;
+            Session session = HibernateUtil.getSessionFactory().openSession();
+        	try {
+        		mainMenuView.setVisible(false);
 	        	StudentView studentView = new StudentView(2);
 	        	studentView.setVisible(true);
 	        	Student data = studentView.getStudentInfo();
-	        	Transaction trans = App.session.beginTransaction();
-	        	App.session.save(data);
-	        	trans.commit();
+	        	transaction = session.beginTransaction();
+	        	session.save(data);
+	        	transaction.commit();
+        	} catch (Exception e) {
+            	transaction.rollback();
+            	System.err.println(e);
+            } finally {
+            	session.close();
+            }
+        	
+        }
+	}
+	 class AddListener implements ActionListener {
+		 
+	        public void actionPerformed(ActionEvent evt) {
+	        	Transaction transaction = null;
+	            Session session = HibernateUtil.getSessionFactory().openSession();
+	        	try {
+	        		mainMenuView.setVisible(false);
+		        	StudentView studentView = new StudentView(2);
+		        	studentView.setVisible(true);
+		        	Student data = studentView.getStudentInfo();
+		        	transaction = session.beginTransaction();
+		        	session.save(data);
+		        	transaction.commit();
+	        	} catch (Exception e) {
+	            	transaction.rollback();
+	            	System.err.println(e);
+	            } finally {
+	            	session.close();
+	            }
+	        	
 	        }
 	    }
 	 class EditListener implements ActionListener {
-	        public void actionPerformed(ActionEvent e) {
-	        	mainMenuView.setVisible(false);
-	        	 StudentView studentView = new StudentView(4);
-	        	studentView.setVisible(true);
-	        	Student data = studentView.getStudentInfo();
-	        	Transaction trans = App.session.beginTransaction();
-	        	App.session.update(data);
-	        	trans.commit();
+	        public void actionPerformed(ActionEvent evt) {
+	        	Transaction transaction = null;
+	            Session session = HibernateUtil.getSessionFactory().openSession();
+	            try {
+	            	mainMenuView.setVisible(false);
+		        	 StudentView studentView = new StudentView(4);
+		        	studentView.setVisible(true);
+		        	Student data = studentView.getStudentInfo();
+		        	transaction = session.beginTransaction();
+		        	session.update(data);
+		        	transaction.commit();
+	            } catch (Exception e) {
+	            	transaction.rollback();
+	            	System.err.println(e);
+	            } finally {
+	            	session.close();
+	            }
+	        	
 	        }
 	    }
 	 class DeleteListener implements ActionListener {
-	        public void actionPerformed(ActionEvent e) {
+	        public void actionPerformed(ActionEvent evt) {
+	        	Transaction transaction = null;
+	            Session session = HibernateUtil.getSessionFactory().openSession();
+	            try {
 	        	mainMenuView.setVisible(false);
 	        	StudentView studentView = new StudentView(3);
 	        	studentView.setVisible(true);
 	        	Student data = studentView.getStudentInfo();
-	        	Transaction trans = App.session.beginTransaction();
-	        	App.session.delete(data);
-	        	trans.commit();
+	        	transaction = session.beginTransaction();
+	        	session.delete(data);
+	        	transaction.commit();
+	            } catch (Exception e) {
+	            	transaction.rollback();
+	            	System.err.println(e);
+	            } finally {
+	            	session.close();
+	            }
 	        }
 	    }
 	 class ViewListener implements ActionListener {
-	        public void actionPerformed(ActionEvent e) {
+	        public void actionPerformed(ActionEvent evt) {
+	        	Transaction transaction = null;
+	            Session session = HibernateUtil.getSessionFactory().openSession();
+	            try {
 	        	mainMenuView.setVisible(false);
 	        	StudentView studentView = new StudentView(1);
 	        	studentView.setVisible(true);
+	            } catch (Exception e) {
+	            	transaction.rollback();
+	            	System.err.println(e);
+	            } finally {
+	            	session.close();
+	            }
 	        }
 	    }
 }

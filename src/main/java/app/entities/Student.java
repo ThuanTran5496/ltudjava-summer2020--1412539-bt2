@@ -3,8 +3,9 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "student")
-public class Student  {
-    private int MSSV;
+public class Student implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
+	private int MSSV;
     private String name;
     private String sex;
     private String CMND;
