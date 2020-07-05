@@ -19,6 +19,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import app.views.GoBack;
+import app.entities.Classes;
 import app.entities.Student;
 import constants.Constants;
 
@@ -30,13 +31,16 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
     private JLabel nameLabel;
     private JLabel ageLabel;
     private JLabel cmndLabel;
+    private JLabel classLabel;
     private JTextField mssvInput;
     private JTextField nameInput;
     private JTextField sexInput;
     private JTextField cmndInput;
+    private JTextField classInput;
     private JButton backBtn;
-    
-    private String [] columnNames = new String [] {"MSSV", "Name", "Sex", "CMND"};
+    private JButton finishBtn;
+
+    private String [] columnNames = new String [] {"MSSV", "Name", "Sex", "CMND", "Class"};
     
     public StudentView(int type) {
         init(type);
@@ -46,17 +50,23 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         constants = new Constants();
         backBtn = new JButton();
+        finishBtn = new JButton();
         jScrollPaneStudentTable = new JScrollPane();
         studentTable = new JTable();
         mssvLabel = new JLabel("MSSV");
         nameLabel = new JLabel("Name");
         ageLabel = new JLabel("Gender");
         cmndLabel = new JLabel("CMND");
+        classLabel = new JLabel("Class");
+
         mssvInput = new JTextField(14);
         nameInput = new JTextField(14);
         sexInput = new JTextField(14);
         cmndInput = new JTextField(14);
+        classInput = new JTextField(14);
+
         backBtn.setText("< Back");
+        finishBtn.setText("Finish");
         
         studentTable.setModel(new DefaultTableModel((Object[][])(new Object [][] {}), columnNames));
         jScrollPaneStudentTable.setViewportView(studentTable);
@@ -69,7 +79,6 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
         // import  
         if (type == 1) {
         	this.setTitle("Import new class from csv");
-        	
         }
         
         // add
@@ -79,29 +88,39 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
             panel.add(nameLabel);
             panel.add(ageLabel);
             panel.add(cmndLabel);
+            panel.add(classLabel);
             
             panel.add(mssvInput);
             panel.add(nameInput);
             panel.add(sexInput);
             panel.add(cmndInput);
+            panel.add(classInput);
+            panel.add(finishBtn);
 
             layout.putConstraint(SpringLayout.WEST, mssvLabel, 10, SpringLayout.WEST, panel);
-            layout.putConstraint(SpringLayout.NORTH, mssvLabel, 10, SpringLayout.NORTH, panel);
+            layout.putConstraint(SpringLayout.NORTH, mssvLabel, 40, SpringLayout.NORTH, panel);
             layout.putConstraint(SpringLayout.WEST, nameLabel, 10, SpringLayout.WEST, panel);
-            layout.putConstraint(SpringLayout.NORTH, nameLabel, 40, SpringLayout.NORTH, panel);
+            layout.putConstraint(SpringLayout.NORTH, nameLabel, 70, SpringLayout.NORTH, panel);
             layout.putConstraint(SpringLayout.WEST, ageLabel, 10, SpringLayout.WEST, panel);
-            layout.putConstraint(SpringLayout.NORTH, ageLabel, 70, SpringLayout.NORTH, panel);
+            layout.putConstraint(SpringLayout.NORTH, ageLabel, 100, SpringLayout.NORTH, panel);
             layout.putConstraint(SpringLayout.WEST, cmndLabel, 10, SpringLayout.WEST, panel);
-            layout.putConstraint(SpringLayout.NORTH, cmndLabel, 100, SpringLayout.NORTH, panel);
+            layout.putConstraint(SpringLayout.NORTH, cmndLabel, 130, SpringLayout.NORTH, panel);
+            layout.putConstraint(SpringLayout.WEST, classLabel, 10, SpringLayout.WEST, panel);
+            layout.putConstraint(SpringLayout.NORTH, classLabel, 160, SpringLayout.NORTH, panel);
             
             layout.putConstraint(SpringLayout.WEST, mssvInput, 100, SpringLayout.WEST, panel);
-            layout.putConstraint(SpringLayout.NORTH, mssvInput, 10, SpringLayout.NORTH, panel);
+            layout.putConstraint(SpringLayout.NORTH, mssvInput, 40, SpringLayout.NORTH, panel);
             layout.putConstraint(SpringLayout.WEST, nameInput, 100, SpringLayout.WEST, panel);
-            layout.putConstraint(SpringLayout.NORTH, nameInput, 40, SpringLayout.NORTH, panel);
+            layout.putConstraint(SpringLayout.NORTH, nameInput, 70, SpringLayout.NORTH, panel);
             layout.putConstraint(SpringLayout.WEST, sexInput, 100, SpringLayout.WEST, panel);
-            layout.putConstraint(SpringLayout.NORTH, sexInput, 70, SpringLayout.NORTH, panel);
+            layout.putConstraint(SpringLayout.NORTH, sexInput, 100, SpringLayout.NORTH, panel);
             layout.putConstraint(SpringLayout.WEST, cmndInput, 100, SpringLayout.WEST, panel);
-            layout.putConstraint(SpringLayout.NORTH, cmndInput, 100, SpringLayout.NORTH, panel);
+            layout.putConstraint(SpringLayout.NORTH, cmndInput, 130, SpringLayout.NORTH, panel);
+            layout.putConstraint(SpringLayout.WEST, classInput, 100, SpringLayout.WEST, panel);
+            layout.putConstraint(SpringLayout.NORTH, classInput, 160, SpringLayout.NORTH, panel);
+            layout.putConstraint(SpringLayout.WEST, finishBtn, 100, SpringLayout.WEST, panel);
+            layout.putConstraint(SpringLayout.NORTH, finishBtn, 190, SpringLayout.NORTH, panel);
+            
         } else if (type == 3 ) {
         	this.setTitle("Delete a student");
         	panel.add(mssvLabel);
@@ -136,6 +155,7 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
             students[i][1] = list.get(i).getName();
             students[i][2] = list.get(i).getSex();
             students[i][3] = list.get(i).getCMND();
+            students[i][4] = list.get(i).getClasses();
         }
         studentTable.setModel(new DefaultTableModel(students, columnNames));
     }
@@ -144,7 +164,8 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
     	mssvInput.setText(student.getMSSV() + " ");
         nameInput.setText(student.getName() + " ");
         sexInput.setText(student.getSex() + " ");
-        cmndInput.setText(student.getCMND());
+        cmndInput.setText(student.getCMND() + " ");
+        classInput.setText(student.getClasses().getName());
     }
     
     public int getMSSVFromInput() {
@@ -164,6 +185,10 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
             if (mssvInput.getText() != null && !(mssvInput.getText().contentEquals(""))) {
                 student.setMSSV(Integer.parseInt(mssvInput.getText()));
             }
+            student.setName(nameInput.getText());
+            student.setSex(sexInput.getText());
+            student.setClasses(new Classes(classInput.getText(), classInput.getText()));
+            student.setCMND(cmndInput.getText());
             return student;
         } catch (Exception e) {
             showMessage(e.getMessage());
@@ -224,5 +249,8 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
     }
     public void addBackListener(ActionListener listener) {
         backBtn.addActionListener(listener);
+    }
+    public void addFinishListener(ActionListener listener) {
+        finishBtn.addActionListener(listener);
     }
 }

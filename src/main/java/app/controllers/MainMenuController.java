@@ -52,14 +52,15 @@ public class MainMenuController {
                 BufferedReader lineReader = new BufferedReader(new FileReader(filePath));
                 transaction = session.beginTransaction();
                 String className = lineReader.readLine();
-                session.save(new Classes(className));
+                Classes newClass = new Classes(className, className);
+                session.save(newClass);
                 transaction.commit();
                 String dataLine = lineReader.readLine();
 
                 while (dataLine != null) {
                 	transaction = session.beginTransaction();
                     String[] data = dataLine.split(",");
-                    Student student = new Student(Integer.parseInt(data[0]), data[1],data[2],data[3], className);
+                    Student student = new Student(Integer.parseInt(data[0]), data[1],data[2],data[3], newClass);
                     
 		        	session.save(student);
 		        	transaction.commit();
@@ -67,7 +68,6 @@ public class MainMenuController {
                 }
                 lineReader.close();
                 studentView.showMessage("Import class " + className + " successfully!");
-     
             } catch (IOException ex) {
                 System.err.println(ex);
             } catch (Exception ex) {
@@ -84,14 +84,17 @@ public class MainMenuController {
 	        public void actionPerformed(ActionEvent evt) {
 	        	Transaction transaction = null;
 	            Session session = HibernateUtil.getSessionFactory().openSession();
+	            StudentView studentView = new StudentView(2);
+	            StudentController studentController = new StudentController(studentView);
 	        	try {
 	        		mainMenuView.setVisible(false);
-		        	StudentView studentView = new StudentView(2);
-		        	studentView.setVisible(true);
+	            	studentController.showStudentView();
 		        	Student data = studentView.getStudentInfo();
-		        	transaction = session.beginTransaction();
-		        	session.save(data);
-		        	transaction.commit();
+		        	if (data != null) {
+		        		transaction = session.beginTransaction();
+			        	session.save(data);
+			        	transaction.commit();
+		        	}
 	        	} catch (Exception e) {
 	            	transaction.rollback();
 	            	System.err.println(e);

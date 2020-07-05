@@ -11,20 +11,22 @@ import app.entities.*;
 public class Classes {
 	
 	private List<Student> student;
-	private int id;
+	private String id;
     private String name;
-    
-    public Classes(String name) {
+    public Classes() {
+    }
+    public Classes(String id, String name) {
+    	this.id = id;
     	this.name = name;
     }
  
     @Id
     @Column(name = "id")
-    public int getId() {
+    public String getId() {
         return id;
     }
  
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
     @OneToMany(mappedBy="classes", cascade = CascadeType.ALL, orphanRemoval=false)

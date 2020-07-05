@@ -17,13 +17,13 @@ public class Student implements java.io.Serializable {
     public Student() {
     }
 
-    public Student(int mssv, String name, String sex, String CMND, String class_id) {
+    public Student(int mssv, String name, String sex, String CMND, Classes classObj) {
         super();
         this.MSSV = mssv;
         this.name = name;
         this.sex = sex;
         this.CMND = CMND;
-        this.class_id = class_id;
+        this.classObj = classObj;
     }
     
     @Id
@@ -45,7 +45,7 @@ public class Student implements java.io.Serializable {
 	public void setClasses(Classes classObj) {
 		this.classObj = classObj;
 	}
-
+    
     public String getName() {
         return name;
     }
