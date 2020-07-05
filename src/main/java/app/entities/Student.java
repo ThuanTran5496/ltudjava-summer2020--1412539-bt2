@@ -1,11 +1,14 @@
 package app.entities;
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = "student", schema="student")
+@Table(name = "student", schema="public")
 public class Student implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
-	private Classes classId;
+	private Classes classObj;
+	private String class_id;
 	private int MSSV;
     private String name;
     private String sex;
@@ -14,12 +17,13 @@ public class Student implements java.io.Serializable {
     public Student() {
     }
 
-    public Student(int mssv, String name, String sex, String CMND) {
+    public Student(int mssv, String name, String sex, String CMND, String class_id) {
         super();
         this.MSSV = mssv;
         this.name = name;
         this.sex = sex;
         this.CMND = CMND;
+        this.class_id = class_id;
     }
     
     @Id
@@ -31,6 +35,16 @@ public class Student implements java.io.Serializable {
     public void setMSSV(int mssv) {
         this.MSSV = mssv;
     }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "class_id")
+	public Classes getClasses() {
+		return classObj;
+	}
+
+	public void setClasses(Classes classObj) {
+		this.classObj = classObj;
+	}
 
     public String getName() {
         return name;

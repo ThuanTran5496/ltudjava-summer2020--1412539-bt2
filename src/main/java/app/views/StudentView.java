@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -16,7 +18,7 @@ import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-
+import app.views.GoBack;
 import app.entities.Student;
 import constants.Constants;
 
@@ -32,6 +34,7 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
     private JTextField nameInput;
     private JTextField sexInput;
     private JTextField cmndInput;
+    private JButton backBtn;
     
     private String [] columnNames = new String [] {"MSSV", "Name", "Sex", "CMND"};
     
@@ -42,6 +45,7 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
     private void init(int type) {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         constants = new Constants();
+        backBtn = new JButton();
         jScrollPaneStudentTable = new JScrollPane();
         studentTable = new JTable();
         mssvLabel = new JLabel("MSSV");
@@ -52,22 +56,20 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
         nameInput = new JTextField(14);
         sexInput = new JTextField(14);
         cmndInput = new JTextField(14);
+        backBtn.setText("< Back");
         
         studentTable.setModel(new DefaultTableModel((Object[][])(new Object [][] {}), columnNames));
         jScrollPaneStudentTable.setViewportView(studentTable);
         jScrollPaneStudentTable.setPreferredSize(new Dimension (480, 300));
         JPanel panel = new JPanel();
         SpringLayout layout = new SpringLayout();
-        
+        panel.add(backBtn);
         panel.setSize(700, 400);
         panel.setLayout(layout);
-        // view  
+        // import  
         if (type == 1) {
         	this.setTitle("Import new class from csv");
-//        	this.setTitle("View all student");
-//        	panel.add(jScrollPaneStudentTable);
-//        	layout.putConstraint(SpringLayout.WEST, jScrollPaneStudentTable, 30, SpringLayout.WEST, panel);
-//            layout.putConstraint(SpringLayout.NORTH, jScrollPaneStudentTable, 10, SpringLayout.NORTH, panel);
+        	
         }
         
         // add
@@ -117,6 +119,7 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
             layout.putConstraint(SpringLayout.WEST, mssvInput, 100, SpringLayout.WEST, panel);
             layout.putConstraint(SpringLayout.NORTH, mssvInput, 10, SpringLayout.NORTH, panel);
         }
+        
         this.add(panel);
         this.pack();
         this.setSize(600, 350);
@@ -218,5 +221,8 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
     }
     
     public void valueChanged(ListSelectionEvent e) {
+    }
+    public void addBackListener(ActionListener listener) {
+        backBtn.addActionListener(listener);
     }
 }

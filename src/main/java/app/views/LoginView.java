@@ -12,7 +12,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.WindowConstants;
-
 import app.entities.LoginUser;
 
 public class LoginView extends JFrame implements ActionListener {
@@ -51,7 +50,6 @@ public class LoginView extends JFrame implements ActionListener {
         panel.add(userNameField);
         panel.add(passwordField);
         panel.add(loginBtn);
-
 
         layout.putConstraint(SpringLayout.WEST, userNameLabel, 20, SpringLayout.WEST, panel);
         layout.putConstraint(SpringLayout.NORTH, userNameLabel, 80, SpringLayout.NORTH, panel);

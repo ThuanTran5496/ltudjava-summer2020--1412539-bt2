@@ -13,6 +13,6 @@
         
     <mapping class="app.entities.Student" />
     <mapping class="app.entities.LoginUser" />
-    <!--  <mapping class="net.codejava.hibernate.Classes" /> -->
+    <mapping class="app.entities.Classes" />
   </session-factory>
 </hibernate-configuration>

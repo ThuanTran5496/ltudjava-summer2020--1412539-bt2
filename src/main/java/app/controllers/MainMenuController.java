@@ -4,6 +4,8 @@ import app.hibernate.HibernateUtil;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import app.entities.Classes;
 import app.entities.Student;
 import app.views.MainMenuView;
 import app.views.StudentView;
@@ -41,32 +43,38 @@ public class MainMenuController {
         	Transaction transaction = null;
             Session session = HibernateUtil.getSessionFactory().openSession();
             String filePath = "classes.csv";
+            StudentView studentView = new StudentView(1);
+            StudentController studentController = new StudentController(studentView);
+            
             try {
             	mainMenuView.setVisible(false);
-	        	StudentView studentView = new StudentView(1);
-	        	studentView.setVisible(true);
+            	studentController.showStudentView();
                 BufferedReader lineReader = new BufferedReader(new FileReader(filePath));
+                transaction = session.beginTransaction();
                 String className = lineReader.readLine();
+                session.save(new Classes(className));
+                transaction.commit();
                 String dataLine = lineReader.readLine();
-     
+
                 while (dataLine != null) {
+                	transaction = session.beginTransaction();
                     String[] data = dataLine.split(",");
-                    Student student = new Student(Integer.parseInt(data[0]), data[1],data[2],data[3]);
-                    transaction = session.beginTransaction();
+                    Student student = new Student(Integer.parseInt(data[0]), data[1],data[2],data[3], className);
+                    
 		        	session.save(student);
 		        	transaction.commit();
                     dataLine = lineReader.readLine();
                 }
                 lineReader.close();
-                studentView.showMessage("Import class" + className + "successfully!");
+                studentView.showMessage("Import class " + className + " successfully!");
      
             } catch (IOException ex) {
                 System.err.println(ex);
             } catch (Exception ex) {
+            	studentView.showMessage("This class already exist!");
             	transaction.rollback();
             	System.err.println(ex);
             } finally {
-            	
             	session.close();
             }
         	
