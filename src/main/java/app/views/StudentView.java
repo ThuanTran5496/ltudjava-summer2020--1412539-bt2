@@ -56,16 +56,18 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
         studentTable.setModel(new DefaultTableModel((Object[][])(new Object [][] {}), columnNames));
         jScrollPaneStudentTable.setViewportView(studentTable);
         jScrollPaneStudentTable.setPreferredSize(new Dimension (480, 300));
-        SpringLayout layout = new SpringLayout();
         JPanel panel = new JPanel();
+        SpringLayout layout = new SpringLayout();
+        
         panel.setSize(700, 400);
         panel.setLayout(layout);
         // view  
         if (type == 1) {
-        	this.setTitle("View all student");
-        	panel.add(jScrollPaneStudentTable);
-        	layout.putConstraint(SpringLayout.WEST, jScrollPaneStudentTable, 30, SpringLayout.WEST, panel);
-            layout.putConstraint(SpringLayout.NORTH, jScrollPaneStudentTable, 10, SpringLayout.NORTH, panel);
+        	this.setTitle("Import new class from csv");
+//        	this.setTitle("View all student");
+//        	panel.add(jScrollPaneStudentTable);
+//        	layout.putConstraint(SpringLayout.WEST, jScrollPaneStudentTable, 30, SpringLayout.WEST, panel);
+//            layout.putConstraint(SpringLayout.NORTH, jScrollPaneStudentTable, 10, SpringLayout.NORTH, panel);
         }
         
         // add

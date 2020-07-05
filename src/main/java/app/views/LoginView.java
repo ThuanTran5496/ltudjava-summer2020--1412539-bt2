@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.WindowConstants;
 
-import app.entities.User;
+import app.entities.LoginUser;
 
 public class LoginView extends JFrame implements ActionListener {
     /**
@@ -75,9 +75,8 @@ public class LoginView extends JFrame implements ActionListener {
         JOptionPane.showMessageDialog(this, message);
     }
 
-    public User getUser() {
-        return new User(userNameField.getText(), 
-                String.copyValueOf(passwordField.getPassword()));
+    public LoginUser getUser() {
+        return new LoginUser(userNameField.getText(), String.copyValueOf(passwordField.getPassword()));
     }
 
     public void actionPerformed(ActionEvent e) {

@@ -26,7 +26,7 @@ public class MainMenuController {
         
 //        add listeners
         view.importNewClassListener(new ImportListener());
-        view.addAddNewListener(new AddListener());
+        view.addAddNewListener(new AddStudentListener());
         view.addEditListener(new EditListener());
         view.addDeleteListener(new DeleteListener());
         view.addViewListener(new ViewListener());
@@ -41,13 +41,12 @@ public class MainMenuController {
         	Transaction transaction = null;
             Session session = HibernateUtil.getSessionFactory().openSession();
             String filePath = "classes.csv";
-            int batchSize = 20;
             try {
             	mainMenuView.setVisible(false);
-	        	StudentView studentView = new StudentView(2);
+	        	StudentView studentView = new StudentView(1);
 	        	studentView.setVisible(true);
                 BufferedReader lineReader = new BufferedReader(new FileReader(filePath));
-                lineReader.readLine(); // skip header line
+                String className = lineReader.readLine();
                 String dataLine = lineReader.readLine();
      
                 while (dataLine != null) {
@@ -59,6 +58,7 @@ public class MainMenuController {
                     dataLine = lineReader.readLine();
                 }
                 lineReader.close();
+                studentView.showMessage("Import class" + className + "successfully!");
      
             } catch (IOException ex) {
                 System.err.println(ex);
@@ -66,12 +66,13 @@ public class MainMenuController {
             	transaction.rollback();
             	System.err.println(ex);
             } finally {
+            	
             	session.close();
             }
         	
         }
 	}
-	 class AddListener implements ActionListener {
+	 class AddStudentListener implements ActionListener {
 	        public void actionPerformed(ActionEvent evt) {
 	        	Transaction transaction = null;
 	            Session session = HibernateUtil.getSessionFactory().openSession();

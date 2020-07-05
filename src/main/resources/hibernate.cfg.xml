@@ -12,6 +12,7 @@
     <property name="show_sql">true</property>
         
     <mapping class="app.entities.Student" />
+    <mapping class="app.entities.LoginUser" />
     <!--  <mapping class="net.codejava.hibernate.Classes" /> -->
   </session-factory>
 </hibernate-configuration>
