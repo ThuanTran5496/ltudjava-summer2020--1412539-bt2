@@ -122,21 +122,18 @@ public class StudentView extends JFrame implements ActionListener, ListSelection
             layout.putConstraint(SpringLayout.NORTH, finishBtn, 190, SpringLayout.NORTH, panel);
             
         } else if (type == 3 ) {
-        	this.setTitle("Delete a student");
-        	panel.add(mssvLabel);
-        	panel.add(mssvInput);
-        	layout.putConstraint(SpringLayout.WEST, mssvLabel, 10, SpringLayout.WEST, panel);
-            layout.putConstraint(SpringLayout.NORTH, mssvLabel, 10, SpringLayout.NORTH, panel);
-            layout.putConstraint(SpringLayout.WEST, mssvInput, 100, SpringLayout.WEST, panel);
-            layout.putConstraint(SpringLayout.NORTH, mssvInput, 10, SpringLayout.NORTH, panel);
-        } else {
-        	this.setTitle("Edit a student");
-        	panel.add(mssvLabel);
-        	panel.add(mssvInput);
-        	layout.putConstraint(SpringLayout.WEST, mssvLabel, 10, SpringLayout.WEST, panel);
-            layout.putConstraint(SpringLayout.NORTH, mssvLabel, 10, SpringLayout.NORTH, panel);
-            layout.putConstraint(SpringLayout.WEST, mssvInput, 100, SpringLayout.WEST, panel);
-            layout.putConstraint(SpringLayout.NORTH, mssvInput, 10, SpringLayout.NORTH, panel);
+        	this.setTitle("Import new schedule from csv");
+        } else if (type == 4 ){
+        	this.setTitle("View student in class");
+        	panel.add(classLabel);
+        	panel.add(classInput);
+        	panel.add(finishBtn);
+        	layout.putConstraint(SpringLayout.WEST, classLabel, 10, SpringLayout.WEST, panel);
+            layout.putConstraint(SpringLayout.NORTH, classLabel, 40, SpringLayout.NORTH, panel);
+            layout.putConstraint(SpringLayout.WEST, classInput, 100, SpringLayout.WEST, panel);
+            layout.putConstraint(SpringLayout.NORTH, classInput, 40, SpringLayout.NORTH, panel);
+            layout.putConstraint(SpringLayout.WEST, finishBtn, 100, SpringLayout.WEST, panel);
+            layout.putConstraint(SpringLayout.NORTH, finishBtn, 70, SpringLayout.NORTH, panel);
         }
         
         this.add(panel);

@@ -14,5 +14,7 @@
     <mapping class="app.entities.Student" />
     <mapping class="app.entities.LoginUser" />
     <mapping class="app.entities.Classes" />
+    <mapping class="app.entities.Schedule" />
+    <mapping class="app.entities.Subject" />
   </session-factory>
 </hibernate-configuration>

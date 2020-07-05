@@ -9,7 +9,7 @@ import app.entities.*;
 @Entity
 @Table(name = "classes", schema="public")
 public class Classes {
-	
+	private Schedule schedule;
 	private List<Student> student;
 	private String id;
     private String name;
@@ -19,7 +19,17 @@ public class Classes {
     	this.id = id;
     	this.name = name;
     }
- 
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id", referencedColumnName = "id")
+    public Schedule getSchedule() {
+    	return schedule;
+    }
+    
+    public void setSchedule(Schedule schedule) {
+    	this.schedule = schedule;
+    }
+    
     @Id
     @Column(name = "id")
     public String getId() {
