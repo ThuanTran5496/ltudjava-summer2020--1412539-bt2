@@ -5,6 +5,7 @@ import javax.persistence.*;
 @Table(name = "student")
 public class Student implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
+	private Classes classId;
 	private int MSSV;
     private String name;
     private String sex;

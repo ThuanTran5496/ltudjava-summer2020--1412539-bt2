@@ -10,6 +10,11 @@ import app.views.StudentView;
 import constants.Constants;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 public class MainMenuController {
 	private MainMenuView mainMenuView;
@@ -35,17 +40,31 @@ public class MainMenuController {
 		public void actionPerformed(ActionEvent evt) {
         	Transaction transaction = null;
             Session session = HibernateUtil.getSessionFactory().openSession();
-        	try {
-        		mainMenuView.setVisible(false);
+            String filePath = "classes.csv";
+            int batchSize = 20;
+            try {
+            	mainMenuView.setVisible(false);
 	        	StudentView studentView = new StudentView(2);
 	        	studentView.setVisible(true);
-	        	Student data = studentView.getStudentInfo();
-	        	transaction = session.beginTransaction();
-	        	session.save(data);
-	        	transaction.commit();
-        	} catch (Exception e) {
+                BufferedReader lineReader = new BufferedReader(new FileReader(filePath));
+                lineReader.readLine(); // skip header line
+                String dataLine = lineReader.readLine();
+     
+                while (dataLine != null) {
+                    String[] data = dataLine.split(",");
+                    Student student = new Student(Integer.parseInt(data[0]), data[1],data[2],data[3]);
+                    transaction = session.beginTransaction();
+		        	session.save(student);
+		        	transaction.commit();
+                    dataLine = lineReader.readLine();
+                }
+                lineReader.close();
+     
+            } catch (IOException ex) {
+                System.err.println(ex);
+            } catch (Exception ex) {
             	transaction.rollback();
-            	System.err.println(e);
+            	System.err.println(ex);
             } finally {
             	session.close();
             }
@@ -53,7 +72,6 @@ public class MainMenuController {
         }
 	}
 	 class AddListener implements ActionListener {
-		 
 	        public void actionPerformed(ActionEvent evt) {
 	        	Transaction transaction = null;
 	            Session session = HibernateUtil.getSessionFactory().openSession();
